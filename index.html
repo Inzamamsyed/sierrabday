@@ -3,51 +3,835 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Birthday Invitation</title>
+  <title>Sierra’s Birthday Bash</title>
   <style>
-    body { font-family: system-ui, Arial; background:#faf7ff; margin:0; }
-    .card { max-width:720px; margin:40px auto; background:#fff; border-radius:20px;
-            padding:28px; box-shadow:0 10px 30px rgba(0,0,0,.08); }
-    h1 { margin:0 0 8px; font-size:34px; }
-    .sub { color:#555; margin:0 0 20px; }
-    .grid { display:grid; gap:14px; grid-template-columns: 1fr 1fr; }
-    .item { background:#f6f0ff; border-radius:14px; padding:14px; }
-    .label { font-weight:700; font-size:12px; letter-spacing:.08em; color:#6b21a8; }
-    .val { margin-top:6px; font-size:16px; }
-    .cta { margin-top:18px; display:flex; gap:12px; flex-wrap:wrap; }
-    a.btn { text-decoration:none; padding:12px 16px; border-radius:12px; font-weight:700; }
-    .primary { background:#6b21a8; color:#fff; }
-    .ghost { background:#fff; border:2px solid #6b21a8; color:#6b21a8; }
-    @media (max-width:640px){ .grid{ grid-template-columns:1fr; } }
+    :root{
+      --red:#e11d2e;
+      --black:#0b0b0f;
+      --yellow:#ffd43b;
+      --cream:#fff7e6;
+      --card:#111218;
+      --muted:#c8c8d0;
+      --good:#22c55e;
+      --bad:#ef4444;
+      --ring: rgba(255, 212, 59, .35);
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+      color: #f6f7ff;
+      background:
+        radial-gradient(circle at 20px 20px, rgba(255,255,255,.13) 0 10px, transparent 11px) 0 0/70px 70px,
+        radial-gradient(circle at 55px 55px, rgba(255,255,255,.10) 0 8px, transparent 9px) 0 0/70px 70px,
+        linear-gradient(160deg, #080810, #12081a 45%, #09090f);
+      min-height:100vh;
+      overflow-x:hidden;
+    }
+
+    /* Top ribbon */
+    .ribbon{
+      background: linear-gradient(90deg, var(--red), #ff3b5b);
+      color:#fff;
+      padding:10px 14px;
+      text-align:center;
+      font-weight:800;
+      letter-spacing:.04em;
+      position:sticky;
+      top:0;
+      z-index:5;
+      box-shadow: 0 10px 24px rgba(0,0,0,.25);
+    }
+
+    .wrap{
+      max-width: 1050px;
+      margin: 28px auto 60px;
+      padding: 0 16px;
+      display:grid;
+      gap: 16px;
+    }
+
+    /* Hero card */
+    .hero{
+      position:relative;
+      border-radius: 28px;
+      overflow:hidden;
+      background:
+        radial-gradient(circle at 18% 22%, rgba(255,212,59,.22), transparent 38%),
+        radial-gradient(circle at 82% 18%, rgba(225,29,46,.20), transparent 42%),
+        linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+      border: 1px solid rgba(255,255,255,.10);
+      box-shadow: 0 24px 60px rgba(0,0,0,.45);
+      padding: 22px;
+      display:grid;
+      gap: 14px;
+    }
+
+    .heroTop{
+      display:flex;
+      gap: 16px;
+      align-items:center;
+      flex-wrap:wrap;
+      justify-content:space-between;
+    }
+
+    /* “Ears” logo */
+    .ears{
+      position:relative;
+      width: 120px;
+      height: 90px;
+      flex: 0 0 auto;
+      filter: drop-shadow(0 10px 14px rgba(0,0,0,.35));
+    }
+    .ears .head{
+      position:absolute;
+      left: 28px;
+      top: 26px;
+      width: 64px;
+      height: 56px;
+      border-radius: 999px;
+      background: var(--black);
+    }
+    .ears .ear{
+      position:absolute;
+      width: 44px;
+      height: 44px;
+      border-radius: 999px;
+      background: var(--black);
+      top: 6px;
+    }
+    .ears .ear.left{ left: 6px; }
+    .ears .ear.right{ right: 6px; }
+    .ears .shine{
+      position:absolute;
+      left: 44px;
+      top: 38px;
+      width: 20px;
+      height: 16px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.12);
+      transform: rotate(-18deg);
+    }
+    .ears .bow{
+      position:absolute;
+      left: 52px;
+      top: 54px;
+      width: 16px;
+      height: 16px;
+      border-radius: 999px;
+      background: var(--yellow);
+      box-shadow: 0 0 0 6px rgba(255,212,59,.16);
+    }
+
+    .titleBlock h1{
+      margin:0;
+      font-size: clamp(26px, 4vw, 44px);
+      line-height:1.05;
+      letter-spacing: -.02em;
+    }
+    .titleBlock p{
+      margin: 6px 0 0;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    .pillRow{
+      display:flex;
+      gap: 10px;
+      flex-wrap:wrap;
+      align-items:center;
+      justify-content:flex-end;
+    }
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap: 8px;
+      padding: 10px 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.10);
+      color: #fff;
+      font-weight: 800;
+      white-space:nowrap;
+      box-shadow: inset 0 0 0 1px rgba(0,0,0,.25);
+    }
+    .pill b{ color: var(--yellow); }
+    .pill .dot{
+      width:10px;height:10px;border-radius:999px;background:var(--yellow);
+      box-shadow:0 0 0 6px rgba(255,212,59,.16);
+    }
+
+    .heroMain{
+      display:grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap: 16px;
+      align-items:stretch;
+    }
+    @media (max-width:900px){
+      .heroMain{ grid-template-columns: 1fr; }
+    }
+
+    .inviteCard{
+      background: rgba(17,18,24,.72);
+      border: 1px solid rgba(255,255,255,.10);
+      border-radius: 22px;
+      padding: 16px;
+      position:relative;
+      overflow:hidden;
+    }
+    .inviteCard:before{
+      content:"";
+      position:absolute;
+      inset:-60px -60px auto auto;
+      width: 180px;
+      height: 180px;
+      border-radius: 999px;
+      background: radial-gradient(circle, rgba(225,29,46,.35), transparent 55%);
+      filter: blur(2px);
+    }
+    .inviteCard h2{
+      margin:0 0 8px;
+      font-size: 18px;
+      letter-spacing:.02em;
+    }
+    .inviteCard .big{
+      font-size: clamp(22px, 3vw, 30px);
+      font-weight: 900;
+      margin: 0 0 8px;
+    }
+    .grid{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 10px;
+    }
+    @media (max-width:520px){ .grid{ grid-template-columns: 1fr; } }
+
+    .item{
+      border-radius: 16px;
+      padding: 12px;
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.08);
+    }
+    .label{
+      color: var(--muted);
+      font-weight: 800;
+      font-size: 12px;
+      letter-spacing:.12em;
+    }
+    .value{
+      margin-top: 6px;
+      font-weight: 900;
+      font-size: 16px;
+    }
+
+    .actions{
+      display:flex;
+      gap: 10px;
+      flex-wrap:wrap;
+      margin-top: 12px;
+    }
+    .btn{
+      appearance:none;
+      border:none;
+      cursor:pointer;
+      border-radius: 14px;
+      padding: 12px 14px;
+      font-weight: 900;
+      color:#0b0b0f;
+      background: var(--yellow);
+      box-shadow: 0 12px 30px rgba(0,0,0,.35);
+      transition: transform .08s ease, filter .12s ease;
+      text-decoration:none;
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+    }
+    .btn:active{ transform: translateY(1px) scale(.99); }
+    .btn.secondary{
+      background: rgba(255,255,255,.08);
+      color:#fff;
+      border: 1px solid rgba(255,255,255,.12);
+      box-shadow:none;
+    }
+    .btn small{ opacity:.85; font-weight:800; }
+
+    /* Games area */
+    .games{
+      display:grid;
+      gap: 12px;
+    }
+    .gameCard{
+      background: rgba(17,18,24,.72);
+      border: 1px solid rgba(255,255,255,.10);
+      border-radius: 22px;
+      padding: 16px;
+      overflow:hidden;
+      position:relative;
+    }
+    .gameCard h3{
+      margin:0 0 6px;
+      font-size: 16px;
+      letter-spacing:.02em;
+    }
+    .gameCard p{
+      margin:0 0 10px;
+      color: var(--muted);
+      font-weight: 650;
+      font-size: 14px;
+    }
+    .row{ display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
+    .tag{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:8px 10px; border-radius:999px;
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.10);
+      font-weight: 800;
+    }
+    .tag .mini{ width:8px; height:8px; border-radius:999px; background: var(--red); box-shadow:0 0 0 6px rgba(225,29,46,.12); }
+
+    /* Memory game */
+    .memoryGrid{
+      display:grid;
+      grid-template-columns: repeat(4, minmax(0,1fr));
+      gap: 10px;
+      margin-top: 10px;
+    }
+    @media (max-width:520px){ .memoryGrid{ grid-template-columns: repeat(3, 1fr); } }
+    .tile{
+      height: 64px;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.06);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size: 26px;
+      cursor:pointer;
+      user-select:none;
+      transition: transform .08s ease, background .12s ease, border-color .12s ease;
+    }
+    .tile:hover{ transform: translateY(-1px); }
+    .tile.revealed{
+      background: rgba(255,212,59,.14);
+      border-color: rgba(255,212,59,.26);
+      box-shadow: 0 0 0 6px var(--ring);
+    }
+    .tile.matched{
+      background: rgba(34,197,94,.12);
+      border-color: rgba(34,197,94,.28);
+    }
+
+    /* Balloon pop */
+    .balloonArea{
+      position:relative;
+      height: 180px;
+      border-radius: 18px;
+      background: rgba(255,255,255,.05);
+      border: 1px dashed rgba(255,255,255,.16);
+      overflow:hidden;
+      margin-top: 10px;
+    }
+    .balloon{
+      position:absolute;
+      width: 44px;
+      height: 54px;
+      border-radius: 999px 999px 999px 999px;
+      background: radial-gradient(circle at 30% 30%, rgba(255,255,255,.25), transparent 40%),
+                  linear-gradient(180deg, rgba(225,29,46,.9), rgba(225,29,46,.65));
+      cursor:pointer;
+      box-shadow: 0 10px 18px rgba(0,0,0,.30);
+      transform: translate(-50%,-50%);
+      display:flex;
+      align-items:flex-end;
+      justify-content:center;
+    }
+    .balloon:after{
+      content:"";
+      width: 2px; height: 22px;
+      background: rgba(255,255,255,.25);
+      margin-bottom:-22px;
+    }
+    .pop{
+      animation: pop .18s ease forwards;
+    }
+    @keyframes pop{
+      to{ transform: translate(-50%,-50%) scale(1.3); opacity:0; }
+    }
+
+    /* Trivia */
+    .q{
+      padding: 10px 12px;
+      border-radius: 16px;
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.10);
+      margin-top: 10px;
+    }
+    .answers{ display:grid; gap:10px; margin-top: 10px; }
+    .ans{
+      text-align:left;
+      padding: 12px 12px;
+      border-radius: 14px;
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.10);
+      color:#fff;
+      font-weight: 850;
+      cursor:pointer;
+      transition: transform .08s ease, border-color .12s ease, background .12s ease;
+    }
+    .ans:hover{ transform: translateY(-1px); }
+    .ans.good{ border-color: rgba(34,197,94,.35); background: rgba(34,197,94,.12); }
+    .ans.bad{ border-color: rgba(239,68,68,.35); background: rgba(239,68,68,.10); }
+    .toast{
+      margin-top: 10px;
+      font-weight: 900;
+      color: var(--yellow);
+    }
+
+    /* Footer */
+    .footer{
+      text-align:center;
+      color: rgba(255,255,255,.68);
+      font-weight: 700;
+      margin-top: 6px;
+    }
+    .small{
+      font-size: 12px;
+      opacity:.85;
+    }
   </style>
 </head>
 <body>
-  <div class="card">
-    <h1>🎉 You’re Invited!</h1>
-    <p class="sub">Come celebrate <b>Aisha’s</b> birthday with cake, games, and good vibes.</p>
+  <div class="ribbon">🎈 Sierra’s Birthday Celebration • 22/02/2026 • 5:30 PM • LancorLumina 🎈</div>
 
-    <div class="grid">
-      <div class="item">
-        <div class="label">DATE</div>
-        <div class="val">Saturday, March 2 • 6:00 PM</div>
-      </div>
-      <div class="item">
-        <div class="label">LOCATION</div>
-        <div class="val">Skyline Rooftop, MG Road, Bengaluru</div>
-      </div>
-      <div class="item">
-        <div class="label">DRESS CODE</div>
-        <div class="val">Pastels / Smart casual</div>
-      </div>
-      <div class="item">
-        <div class="label">RSVP BY</div>
-        <div class="val">Feb 25 • +91 90000 00000</div>
-      </div>
-    </div>
+  <main class="wrap">
+    <section class="hero" aria-label="Invitation">
+      <div class="heroTop">
+        <div class="row">
+          <div class="ears" aria-hidden="true">
+            <div class="ear left"></div>
+            <div class="ear right"></div>
+            <div class="head"></div>
+            <div class="shine"></div>
+            <div class="bow"></div>
+          </div>
+          <div class="titleBlock">
+            <h1>Come join Sierra’s <span style="color:var(--yellow)">4th</span> Birthday Bash!</h1>
+            <p>Classic clubhouse vibes • polka dots • giggles • and mini games 🎮</p>
+          </div>
+        </div>
 
-    <div class="cta">
-      <a class="btn ghost" href="https://maps.app.goo.gl/UNfRRZHJD8uBPXif8">Open in Maps</a>
-    </div>
-  </div>
+        <div class="pillRow">
+          <div class="pill"><span class="dot"></span> Theme: <b>Classic Mouse Clubhouse</b></div>
+          <div class="pill">DOB: <b>22/02/2022</b></div>
+          <div class="pill">Starts: <b>5:30 PM</b></div>
+        </div>
+      </div>
+
+      <div class="heroMain">
+        <div class="inviteCard">
+          <h2>🎁 You’re invited!</h2>
+          <p class="big">Let’s celebrate <span style="color:var(--yellow)">Sierra</span> with fun, snacks, and surprises!</p>
+
+          <div class="grid">
+            <div class="item">
+              <div class="label">CELEBRATION DATE</div>
+              <div class="value">22/02/2026</div>
+            </div>
+            <div class="item">
+              <div class="label">TIME</div>
+              <div class="value">5:30 PM</div>
+            </div>
+            <div class="item">
+              <div class="label">PLACE</div>
+              <div class="value">LancorLumina</div>
+            </div>
+            <div class="item">
+              <div class="label">THEME</div>
+              <div class="value">Classic Clubhouse</div>
+            </div>
+          </div>
+
+          <div class="actions">
+            <a class="btn" id="addToCal" href="#" role="button" aria-label="Add to calendar">
+              📅 Add to Calendar <small>(.ics)</small>
+            </a>
+            <button class="btn secondary" id="copyDetails" type="button">📋 Copy Details</button>
+            <button class="btn secondary" id="confetti" type="button">✨ Confetti</button>
+          </div>
+
+          <div class="footer small">Tip: Play the games on the right — winners get “golden stars” ⭐</div>
+        </div>
+
+        <div class="games" aria-label="Games">
+          <!-- Game 1: Memory Match -->
+          <div class="gameCard">
+            <h3>🧠 Memory Match</h3>
+            <p>Find all pairs! Tap two tiles to match.</p>
+            <div class="row">
+              <span class="tag"><span class="mini"></span> Moves: <span id="moves">0</span></span>
+              <span class="tag"><span class="mini"></span> Pairs: <span id="pairs">0</span>/6</span>
+              <button class="btn secondary" id="resetMemory" type="button">🔄 Reset</button>
+            </div>
+            <div class="memoryGrid" id="memoryGrid" aria-label="Memory tiles"></div>
+          </div>
+
+          <!-- Game 2: Balloon Pop -->
+          <div class="gameCard">
+            <h3>🎈 Balloon Pop</h3>
+            <p>Pop as many balloons as you can in 15 seconds!</p>
+            <div class="row">
+              <span class="tag"><span class="mini"></span> Score: <span id="popScore">0</span></span>
+              <span class="tag"><span class="mini"></span> Time: <span id="popTime">15</span>s</span>
+              <button class="btn" id="startPop" type="button">▶ Start</button>
+              <button class="btn secondary" id="resetPop" type="button">↺ Reset</button>
+            </div>
+            <div class="balloonArea" id="balloonArea" aria-label="Balloon pop area"></div>
+          </div>
+
+          <!-- Game 3: Quick Quiz -->
+          <div class="gameCard">
+            <h3>⭐ Quick Quiz</h3>
+            <p>Answer 3 fun questions to earn stars!</p>
+            <div class="q" id="question">Loading question…</div>
+            <div class="answers" id="answers"></div>
+            <div class="row" style="margin-top:10px">
+              <span class="tag"><span class="mini"></span> Stars: <span id="stars">0</span></span>
+              <button class="btn secondary" id="nextQ" type="button">➡ Next</button>
+            </div>
+            <div class="toast" id="toast" aria-live="polite"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    // ===== Invitation details =====
+    const details = {
+      name: "Sierra",
+      dob: "22/02/2022",
+      date: "22/02/2026",
+      time: "5:30 PM",
+      place: "LancorLumina",
+      title: "Sierra’s Birthday Celebration"
+    };
+
+    // ===== Button: Copy Details =====
+    document.getElementById("copyDetails").addEventListener("click", async () => {
+      const text =
+`${details.title}
+Name: ${details.name}
+DOB: ${details.dob}
+Celebration: ${details.date} at ${details.time}
+Place: ${details.place}`;
+      try{
+        await navigator.clipboard.writeText(text);
+        alert("Copied! ✅");
+      }catch{
+        prompt("Copy this:", text);
+      }
+    });
+
+    // ===== Button: Confetti (simple emoji burst) =====
+    document.getElementById("confetti").addEventListener("click", () => {
+      const emojis = ["✨","🎉","⭐","🎈","🎊","💛"];
+      for(let i=0;i<50;i++){
+        const s = document.createElement("span");
+        s.textContent = emojis[Math.floor(Math.random()*emojis.length)];
+        s.style.position="fixed";
+        s.style.left = Math.random()*100 + "vw";
+        s.style.top = "-10px";
+        s.style.fontSize = (14 + Math.random()*18) + "px";
+        s.style.zIndex = 9999;
+        s.style.transition = "transform 1.2s ease, opacity 1.2s ease";
+        document.body.appendChild(s);
+        requestAnimationFrame(() => {
+          s.style.transform = `translateY(${110 + Math.random()*60}vh) rotate(${Math.random()*360}deg)`;
+          s.style.opacity = "0";
+        });
+        setTimeout(() => s.remove(), 1300);
+      }
+    });
+
+    // ===== Add to Calendar (.ics download) =====
+    function toICSDate(dateStr, timeStr){
+      // dateStr: DD/MM/YYYY, timeStr: h:mm PM
+      const [dd,mm,yyyy] = dateStr.split("/").map(Number);
+      let [time, ampm] = timeStr.split(" ");
+      let [hh, min] = time.split(":").map(Number);
+      if(ampm.toUpperCase()==="PM" && hh !== 12) hh += 12;
+      if(ampm.toUpperCase()==="AM" && hh === 12) hh = 0;
+
+      // Create local date; ICS uses "floating" local time if no Z
+      const pad = (n)=> String(n).padStart(2,"0");
+      return `${yyyy}${pad(mm)}${pad(dd)}T${pad(hh)}${pad(min)}00`;
+    }
+
+    document.getElementById("addToCal").addEventListener("click", (e) => {
+      e.preventDefault();
+      const dtStart = toICSDate(details.date, details.time);
+      // 2-hour default duration
+      const [dd,mm,yyyy] = details.date.split("/").map(Number);
+      const end = new Date(yyyy, mm-1, dd, 17, 30, 0);
+      end.setHours(end.getHours()+2);
+      const pad = (n)=> String(n).padStart(2,"0");
+      const dtEnd = `${end.getFullYear()}${pad(end.getMonth()+1)}${pad(end.getDate())}T${pad(end.getHours())}${pad(end.getMinutes())}00`;
+
+      const ics =
+`BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Invite//Sierra Birthday//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+BEGIN:VEVENT
+DTSTART:${dtStart}
+DTEND:${dtEnd}
+SUMMARY:${details.title}
+LOCATION:${details.place}
+DESCRIPTION:Classic clubhouse themed birthday celebration for ${details.name}.
+END:VEVENT
+END:VCALENDAR`;
+
+      const blob = new Blob([ics], {type:"text/calendar;charset=utf-8"});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "Sierra_Birthday_Invite.ics";
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+    });
+
+    // ===== Game 1: Memory Match =====
+    const icons = ["⭐","🎈","🧤","🍰","✨","🎁"]; // 6 pairs => 12 tiles
+    let memoryState = {
+      tiles: [],
+      first: null,
+      lock: false,
+      moves: 0,
+      pairs: 0
+    };
+
+    function shuffle(arr){
+      for(let i=arr.length-1;i>0;i--){
+        const j = Math.floor(Math.random()*(i+1));
+        [arr[i],arr[j]] = [arr[j],arr[i]];
+      }
+      return arr;
+    }
+
+    function buildMemory(){
+      const grid = document.getElementById("memoryGrid");
+      grid.innerHTML = "";
+      const deck = shuffle([...icons, ...icons]).map((v, idx) => ({
+        id: idx,
+        v,
+        revealed:false,
+        matched:false
+      }));
+      memoryState = { tiles: deck, first:null, lock:false, moves:0, pairs:0 };
+      document.getElementById("moves").textContent = "0";
+      document.getElementById("pairs").textContent = "0";
+
+      deck.forEach(t => {
+        const btn = document.createElement("button");
+        btn.className = "tile";
+        btn.setAttribute("aria-label", "Memory tile");
+        btn.dataset.id = t.id;
+        btn.textContent = "•"; // hidden
+        btn.addEventListener("click", onTile);
+        grid.appendChild(btn);
+      });
+    }
+
+    function setTileVisual(id){
+      const tile = memoryState.tiles[id];
+      const el = document.querySelector(`.tile[data-id="${id}"]`);
+      if(!el) return;
+      el.classList.toggle("revealed", tile.revealed && !tile.matched);
+      el.classList.toggle("matched", tile.matched);
+      el.textContent = (tile.revealed || tile.matched) ? tile.v : "•";
+      el.disabled = tile.matched;
+    }
+
+    function onTile(e){
+      const id = Number(e.currentTarget.dataset.id);
+      const tile = memoryState.tiles[id];
+      if(memoryState.lock || tile.matched || tile.revealed) return;
+
+      tile.revealed = true;
+      setTileVisual(id);
+
+      if(memoryState.first === null){
+        memoryState.first = id;
+        return;
+      }
+
+      // second pick
+      memoryState.moves++;
+      document.getElementById("moves").textContent = String(memoryState.moves);
+
+      const firstId = memoryState.first;
+      const firstTile = memoryState.tiles[firstId];
+
+      if(firstTile.v === tile.v){
+        // match
+        firstTile.matched = true;
+        tile.matched = true;
+        memoryState.pairs++;
+        document.getElementById("pairs").textContent = String(memoryState.pairs);
+        setTileVisual(firstId);
+        setTileVisual(id);
+        memoryState.first = null;
+
+        if(memoryState.pairs === icons.length){
+          setTimeout(() => alert("You matched them all! ⭐🎉"), 120);
+        }
+      }else{
+        // no match
+        memoryState.lock = true;
+        setTimeout(() => {
+          firstTile.revealed = false;
+          tile.revealed = false;
+          setTileVisual(firstId);
+          setTileVisual(id);
+          memoryState.first = null;
+          memoryState.lock = false;
+        }, 650);
+      }
+    }
+
+    document.getElementById("resetMemory").addEventListener("click", buildMemory);
+    buildMemory();
+
+    // ===== Game 2: Balloon Pop =====
+    const area = document.getElementById("balloonArea");
+    let popTimer = null;
+    let popTimeLeft = 15;
+    let popScore = 0;
+    let popRunning = false;
+
+    function resetPop(){
+      popRunning = false;
+      clearInterval(popTimer);
+      popTimer = null;
+      popTimeLeft = 15;
+      popScore = 0;
+      document.getElementById("popTime").textContent = popTimeLeft;
+      document.getElementById("popScore").textContent = popScore;
+      area.innerHTML = "";
+    }
+
+    function spawnBalloon(){
+      if(!popRunning) return;
+      const b = document.createElement("div");
+      b.className = "balloon";
+      const x = 10 + Math.random()*80;
+      const y = 20 + Math.random()*70;
+      b.style.left = x + "%";
+      b.style.top = y + "%";
+
+      // vary color between red/yellow subtly
+      const isYellow = Math.random() < 0.35;
+      if(isYellow){
+        b.style.background =
+          "radial-gradient(circle at 30% 30%, rgba(255,255,255,.25), transparent 40%)," +
+          "linear-gradient(180deg, rgba(255,212,59,.95), rgba(255,212,59,.65))";
+      }
+
+      b.addEventListener("click", () => {
+        if(!popRunning) return;
+        popScore++;
+        document.getElementById("popScore").textContent = popScore;
+        b.classList.add("pop");
+        setTimeout(() => b.remove(), 180);
+      });
+
+      area.appendChild(b);
+      // auto-remove if not popped
+      setTimeout(() => b.remove(), 1400);
+    }
+
+    function startPop(){
+      if(popRunning) return;
+      resetPop();
+      popRunning = true;
+
+      // spawn balloons quickly
+      const spawner = setInterval(() => {
+        if(!popRunning){ clearInterval(spawner); return; }
+        spawnBalloon();
+        if(Math.random() < 0.6) spawnBalloon();
+      }, 450);
+
+      popTimer = setInterval(() => {
+        popTimeLeft--;
+        document.getElementById("popTime").textContent = popTimeLeft;
+        if(popTimeLeft <= 0){
+          popRunning = false;
+          clearInterval(popTimer);
+          popTimer = null;
+          setTimeout(() => alert(`Time! 🎈 Your score: ${popScore}`), 50);
+        }
+      }, 1000);
+    }
+
+    document.getElementById("startPop").addEventListener("click", startPop);
+    document.getElementById("resetPop").addEventListener("click", resetPop);
+    resetPop();
+
+    // ===== Game 3: Quick Quiz =====
+    const quiz = [
+      { q: "What do we say when it’s party time?", a: ["Let’s gooooo!", "Time to nap", "No fun allowed"], correct: 0 },
+      { q: "What’s Sierra’s celebration date?", a: ["22/02/2026", "22/02/2025", "02/22/2026"], correct: 0 },
+      { q: "Where’s the party happening?", a: ["LancorLumina", "Moon Palace", "Candy Castle"], correct: 0 },
+      { q: "Pick the best party snack:", a: ["Cake 🎂", "Broccoli 🥦", "Plain water"], correct: 0 },
+      { q: "How many stars do you want today?", a: ["All of them ⭐", "Zero", "One maybe"], correct: 0 }
+    ];
+    let qi = 0;
+    let stars = 0;
+
+    function renderQ(){
+      const item = quiz[qi % quiz.length];
+      const qEl = document.getElementById("question");
+      const aEl = document.getElementById("answers");
+      const toast = document.getElementById("toast");
+      toast.textContent = "";
+      qEl.textContent = item.q;
+      aEl.innerHTML = "";
+
+      item.a.forEach((txt, idx) => {
+        const b = document.createElement("button");
+        b.className = "ans";
+        b.type = "button";
+        b.textContent = txt;
+        b.addEventListener("click", () => {
+          // disable all
+          [...aEl.children].forEach(x => x.disabled = true);
+          if(idx === item.correct){
+            b.classList.add("good");
+            stars++;
+            document.getElementById("stars").textContent = stars;
+            toast.textContent = "Correct! You earned a star ⭐";
+          }else{
+            b.classList.add("bad");
+            const correctBtn = aEl.children[item.correct];
+            if(correctBtn) correctBtn.classList.add("good");
+            toast.textContent = "Oops! Try the next one ✨";
+          }
+        });
+        aEl.appendChild(b);
+      });
+    }
+
+    document.getElementById("nextQ").addEventListener("click", () => {
+      qi++;
+      renderQ();
+    });
+
+    renderQ();
+  </script>
 </body>
 </html>
