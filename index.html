@@ -9,11 +9,7 @@
       --red:#e11d2e;
       --black:#0b0b0f;
       --yellow:#ffd43b;
-      --cream:#fff7e6;
-      --card:#111218;
       --muted:#c8c8d0;
-      --good:#22c55e;
-      --bad:#ef4444;
       --ring: rgba(255, 212, 59, .35);
     }
     *{box-sizing:border-box}
@@ -28,8 +24,6 @@
       min-height:100vh;
       overflow-x:hidden;
     }
-
-    /* Top ribbon */
     .ribbon{
       background: linear-gradient(90deg, var(--red), #ff3b5b);
       color:#fff;
@@ -42,20 +36,9 @@
       z-index:5;
       box-shadow: 0 10px 24px rgba(0,0,0,.25);
     }
-
-    .wrap{
-      max-width: 1050px;
-      margin: 28px auto 60px;
-      padding: 0 16px;
-      display:grid;
-      gap: 16px;
-    }
-
-    /* Hero card */
+    .wrap{ max-width: 1050px; margin: 28px auto 60px; padding: 0 16px; display:grid; gap: 16px; }
     .hero{
-      position:relative;
-      border-radius: 28px;
-      overflow:hidden;
+      position:relative; border-radius: 28px; overflow:hidden;
       background:
         radial-gradient(circle at 18% 22%, rgba(255,212,59,.22), transparent 38%),
         radial-gradient(circle at 82% 18%, rgba(225,29,46,.20), transparent 42%),
@@ -66,110 +49,28 @@
       display:grid;
       gap: 14px;
     }
+    .heroTop{ display:flex; gap: 16px; align-items:center; flex-wrap:wrap; justify-content:space-between; }
+    .row{ display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
+    .ears{ position:relative; width: 120px; height: 90px; flex: 0 0 auto; filter: drop-shadow(0 10px 14px rgba(0,0,0,.35)); }
+    .ears .head{ position:absolute; left: 28px; top: 26px; width: 64px; height: 56px; border-radius: 999px; background: var(--black); }
+    .ears .ear{ position:absolute; width: 44px; height: 44px; border-radius: 999px; background: var(--black); top: 6px; }
+    .ears .ear.left{ left: 6px; } .ears .ear.right{ right: 6px; }
+    .ears .shine{ position:absolute; left: 44px; top: 38px; width: 20px; height: 16px; border-radius: 999px; background: rgba(255,255,255,.12); transform: rotate(-18deg); }
+    .ears .bow{ position:absolute; left: 52px; top: 54px; width: 16px; height: 16px; border-radius: 999px; background: var(--yellow); box-shadow: 0 0 0 6px rgba(255,212,59,.16); }
 
-    .heroTop{
-      display:flex;
-      gap: 16px;
-      align-items:center;
-      flex-wrap:wrap;
-      justify-content:space-between;
-    }
+    .titleBlock h1{ margin:0; font-size: clamp(26px, 4vw, 44px); line-height:1.05; letter-spacing: -.02em; }
+    .titleBlock p{ margin: 6px 0 0; color: var(--muted); font-weight: 600; }
 
-    /* “Ears” logo */
-    .ears{
-      position:relative;
-      width: 120px;
-      height: 90px;
-      flex: 0 0 auto;
-      filter: drop-shadow(0 10px 14px rgba(0,0,0,.35));
-    }
-    .ears .head{
-      position:absolute;
-      left: 28px;
-      top: 26px;
-      width: 64px;
-      height: 56px;
-      border-radius: 999px;
-      background: var(--black);
-    }
-    .ears .ear{
-      position:absolute;
-      width: 44px;
-      height: 44px;
-      border-radius: 999px;
-      background: var(--black);
-      top: 6px;
-    }
-    .ears .ear.left{ left: 6px; }
-    .ears .ear.right{ right: 6px; }
-    .ears .shine{
-      position:absolute;
-      left: 44px;
-      top: 38px;
-      width: 20px;
-      height: 16px;
-      border-radius: 999px;
-      background: rgba(255,255,255,.12);
-      transform: rotate(-18deg);
-    }
-    .ears .bow{
-      position:absolute;
-      left: 52px;
-      top: 54px;
-      width: 16px;
-      height: 16px;
-      border-radius: 999px;
-      background: var(--yellow);
-      box-shadow: 0 0 0 6px rgba(255,212,59,.16);
-    }
-
-    .titleBlock h1{
-      margin:0;
-      font-size: clamp(26px, 4vw, 44px);
-      line-height:1.05;
-      letter-spacing: -.02em;
-    }
-    .titleBlock p{
-      margin: 6px 0 0;
-      color: var(--muted);
-      font-weight: 600;
-    }
-
-    .pillRow{
-      display:flex;
-      gap: 10px;
-      flex-wrap:wrap;
-      align-items:center;
-      justify-content:flex-end;
-    }
-    .pill{
-      display:inline-flex;
-      align-items:center;
-      gap: 8px;
-      padding: 10px 12px;
-      border-radius: 999px;
-      background: rgba(255,255,255,.06);
-      border: 1px solid rgba(255,255,255,.10);
-      color: #fff;
-      font-weight: 800;
-      white-space:nowrap;
+    .pillRow{ display:flex; gap: 10px; flex-wrap:wrap; align-items:center; justify-content:flex-end; }
+    .pill{ display:inline-flex; align-items:center; gap: 8px; padding: 10px 12px; border-radius: 999px;
+      background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.10); color: #fff; font-weight: 800; white-space:nowrap;
       box-shadow: inset 0 0 0 1px rgba(0,0,0,.25);
     }
     .pill b{ color: var(--yellow); }
-    .pill .dot{
-      width:10px;height:10px;border-radius:999px;background:var(--yellow);
-      box-shadow:0 0 0 6px rgba(255,212,59,.16);
-    }
+    .pill .dot{ width:10px;height:10px;border-radius:999px;background:var(--yellow); box-shadow:0 0 0 6px rgba(255,212,59,.16); }
 
-    .heroMain{
-      display:grid;
-      grid-template-columns: 1.2fr .8fr;
-      gap: 16px;
-      align-items:stretch;
-    }
-    @media (max-width:900px){
-      .heroMain{ grid-template-columns: 1fr; }
-    }
+    .heroMain{ display:grid; grid-template-columns: 1.2fr .8fr; gap: 16px; align-items:stretch; }
+    @media (max-width:900px){ .heroMain{ grid-template-columns: 1fr; } }
 
     .inviteCard{
       background: rgba(17,18,24,.72);
@@ -179,137 +80,43 @@
       position:relative;
       overflow:hidden;
     }
-    .inviteCard:before{
-      content:"";
-      position:absolute;
-      inset:-60px -60px auto auto;
-      width: 180px;
-      height: 180px;
-      border-radius: 999px;
-      background: radial-gradient(circle, rgba(225,29,46,.35), transparent 55%);
-      filter: blur(2px);
-    }
-    .inviteCard h2{
-      margin:0 0 8px;
-      font-size: 18px;
-      letter-spacing:.02em;
-    }
-    .inviteCard .big{
-      font-size: clamp(22px, 3vw, 30px);
-      font-weight: 900;
-      margin: 0 0 8px;
-    }
-    .grid{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-      margin-top: 10px;
-    }
+    .inviteCard h2{ margin:0 0 8px; font-size: 18px; letter-spacing:.02em; }
+    .inviteCard .big{ font-size: clamp(22px, 3vw, 30px); font-weight: 900; margin: 0 0 8px; }
+
+    .grid{ display:grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
     @media (max-width:520px){ .grid{ grid-template-columns: 1fr; } }
+    .item{ border-radius: 16px; padding: 12px; background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.08); }
+    .label{ color: var(--muted); font-weight: 800; font-size: 12px; letter-spacing:.12em; }
+    .value{ margin-top: 6px; font-weight: 900; font-size: 16px; }
 
-    .item{
-      border-radius: 16px;
-      padding: 12px;
-      background: rgba(255,255,255,.06);
-      border: 1px solid rgba(255,255,255,.08);
-    }
-    .label{
-      color: var(--muted);
-      font-weight: 800;
-      font-size: 12px;
-      letter-spacing:.12em;
-    }
-    .value{
-      margin-top: 6px;
-      font-weight: 900;
-      font-size: 16px;
-    }
-
-    .actions{
-      display:flex;
-      gap: 10px;
-      flex-wrap:wrap;
-      margin-top: 12px;
-    }
+    .actions{ display:flex; gap: 10px; flex-wrap:wrap; margin-top: 12px; }
     .btn{
-      appearance:none;
-      border:none;
-      cursor:pointer;
-      border-radius: 14px;
-      padding: 12px 14px;
-      font-weight: 900;
-      color:#0b0b0f;
-      background: var(--yellow);
-      box-shadow: 0 12px 30px rgba(0,0,0,.35);
-      transition: transform .08s ease, filter .12s ease;
-      text-decoration:none;
-      display:inline-flex;
-      align-items:center;
-      gap:10px;
+      appearance:none; border:none; cursor:pointer; border-radius: 14px; padding: 12px 14px; font-weight: 900;
+      color:#0b0b0f; background: var(--yellow); box-shadow: 0 12px 30px rgba(0,0,0,.35);
+      transition: transform .08s ease, filter .12s ease; text-decoration:none; display:inline-flex; align-items:center; gap:10px;
     }
     .btn:active{ transform: translateY(1px) scale(.99); }
-    .btn.secondary{
-      background: rgba(255,255,255,.08);
-      color:#fff;
-      border: 1px solid rgba(255,255,255,.12);
-      box-shadow:none;
-    }
+    .btn.secondary{ background: rgba(255,255,255,.08); color:#fff; border: 1px solid rgba(255,255,255,.12); box-shadow:none; }
     .btn small{ opacity:.85; font-weight:800; }
 
-    /* Games area */
-    .games{
-      display:grid;
-      gap: 12px;
-    }
-    .gameCard{
-      background: rgba(17,18,24,.72);
-      border: 1px solid rgba(255,255,255,.10);
-      border-radius: 22px;
-      padding: 16px;
-      overflow:hidden;
-      position:relative;
-    }
-    .gameCard h3{
-      margin:0 0 6px;
-      font-size: 16px;
-      letter-spacing:.02em;
-    }
-    .gameCard p{
-      margin:0 0 10px;
-      color: var(--muted);
-      font-weight: 650;
-      font-size: 14px;
-    }
-    .row{ display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
-    .tag{
-      display:inline-flex; align-items:center; gap:8px;
-      padding:8px 10px; border-radius:999px;
-      background: rgba(255,255,255,.06);
-      border: 1px solid rgba(255,255,255,.10);
-      font-weight: 800;
+    .games{ display:grid; gap: 12px; }
+    .gameCard{ background: rgba(17,18,24,.72); border: 1px solid rgba(255,255,255,.10); border-radius: 22px; padding: 16px; }
+    .gameCard h3{ margin:0 0 6px; font-size: 16px; letter-spacing:.02em; }
+    .gameCard p{ margin:0 0 10px; color: var(--muted); font-weight: 650; font-size: 14px; }
+
+    .tag{ display:inline-flex; align-items:center; gap:8px; padding:8px 10px; border-radius:999px;
+      background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.10); font-weight: 800; color:#fff;
     }
     .tag .mini{ width:8px; height:8px; border-radius:999px; background: var(--red); box-shadow:0 0 0 6px rgba(225,29,46,.12); }
 
-    /* Memory game */
-    .memoryGrid{
-      display:grid;
-      grid-template-columns: repeat(4, minmax(0,1fr));
-      gap: 10px;
-      margin-top: 10px;
-    }
+    .memoryGrid{ display:grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 10px; margin-top: 10px; }
     @media (max-width:520px){ .memoryGrid{ grid-template-columns: repeat(3, 1fr); } }
     .tile{
-      height: 64px;
-      border-radius: 16px;
-      border: 1px solid rgba(255,255,255,.10);
-      background: rgba(255,255,255,.06);
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      font-size: 26px;
-      cursor:pointer;
-      user-select:none;
+      height: 64px; border-radius: 16px; border: 1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.06); display:flex; align-items:center; justify-content:center;
+      font-size: 26px; cursor:pointer; user-select:none;
       transition: transform .08s ease, background .12s ease, border-color .12s ease;
+      color:#fff;
     }
     .tile:hover{ transform: translateY(-1px); }
     .tile.revealed{
@@ -317,88 +124,36 @@
       border-color: rgba(255,212,59,.26);
       box-shadow: 0 0 0 6px var(--ring);
     }
-    .tile.matched{
-      background: rgba(34,197,94,.12);
-      border-color: rgba(34,197,94,.28);
-    }
+    .tile.matched{ background: rgba(34,197,94,.12); border-color: rgba(34,197,94,.28); }
 
-    /* Balloon pop */
     .balloonArea{
-      position:relative;
-      height: 180px;
-      border-radius: 18px;
-      background: rgba(255,255,255,.05);
-      border: 1px dashed rgba(255,255,255,.16);
-      overflow:hidden;
-      margin-top: 10px;
+      position:relative; height: 180px; border-radius: 18px; background: rgba(255,255,255,.05);
+      border: 1px dashed rgba(255,255,255,.16); overflow:hidden; margin-top: 10px;
     }
     .balloon{
-      position:absolute;
-      width: 44px;
-      height: 54px;
-      border-radius: 999px 999px 999px 999px;
+      position:absolute; width: 44px; height: 54px; border-radius: 999px;
       background: radial-gradient(circle at 30% 30%, rgba(255,255,255,.25), transparent 40%),
                   linear-gradient(180deg, rgba(225,29,46,.9), rgba(225,29,46,.65));
-      cursor:pointer;
-      box-shadow: 0 10px 18px rgba(0,0,0,.30);
-      transform: translate(-50%,-50%);
-      display:flex;
-      align-items:flex-end;
-      justify-content:center;
+      cursor:pointer; box-shadow: 0 10px 18px rgba(0,0,0,.30);
+      transform: translate(-50%,-50%); display:flex; align-items:flex-end; justify-content:center;
     }
-    .balloon:after{
-      content:"";
-      width: 2px; height: 22px;
-      background: rgba(255,255,255,.25);
-      margin-bottom:-22px;
-    }
-    .pop{
-      animation: pop .18s ease forwards;
-    }
-    @keyframes pop{
-      to{ transform: translate(-50%,-50%) scale(1.3); opacity:0; }
-    }
+    .balloon:after{ content:""; width: 2px; height: 22px; background: rgba(255,255,255,.25); margin-bottom:-22px; }
+    .pop{ animation: pop .18s ease forwards; }
+    @keyframes pop{ to{ transform: translate(-50%,-50%) scale(1.3); opacity:0; } }
 
-    /* Trivia */
-    .q{
-      padding: 10px 12px;
-      border-radius: 16px;
-      background: rgba(255,255,255,.06);
-      border: 1px solid rgba(255,255,255,.10);
-      margin-top: 10px;
-    }
+    .q{ padding: 10px 12px; border-radius: 16px; background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.10); margin-top: 10px; }
     .answers{ display:grid; gap:10px; margin-top: 10px; }
     .ans{
-      text-align:left;
-      padding: 12px 12px;
-      border-radius: 14px;
-      background: rgba(255,255,255,.06);
-      border: 1px solid rgba(255,255,255,.10);
-      color:#fff;
-      font-weight: 850;
-      cursor:pointer;
+      text-align:left; padding: 12px 12px; border-radius: 14px; background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.10); color:#fff; font-weight: 850; cursor:pointer;
       transition: transform .08s ease, border-color .12s ease, background .12s ease;
     }
     .ans:hover{ transform: translateY(-1px); }
     .ans.good{ border-color: rgba(34,197,94,.35); background: rgba(34,197,94,.12); }
     .ans.bad{ border-color: rgba(239,68,68,.35); background: rgba(239,68,68,.10); }
-    .toast{
-      margin-top: 10px;
-      font-weight: 900;
-      color: var(--yellow);
-    }
-
-    /* Footer */
-    .footer{
-      text-align:center;
-      color: rgba(255,255,255,.68);
-      font-weight: 700;
-      margin-top: 6px;
-    }
-    .small{
-      font-size: 12px;
-      opacity:.85;
-    }
+    .toast{ margin-top: 10px; font-weight: 900; color: var(--yellow); }
+    .footer{ text-align:center; color: rgba(255,255,255,.68); font-weight: 700; margin-top: 6px; }
+    .small{ font-size: 12px; opacity:.85; }
   </style>
 </head>
 <body>
@@ -456,6 +211,12 @@
             <a class="btn" id="addToCal" href="#" role="button" aria-label="Add to calendar">
               📅 Add to Calendar <small>(.ics)</small>
             </a>
+
+            <!-- ✅ NEW: Location button -->
+            <a class="btn secondary" id="openLocation" href="https://maps.app.goo.gl/UNfRRZHJD8uBPXif8" target="_blank" rel="noopener">
+              📍 Open Location
+            </a>
+
             <button class="btn secondary" id="copyDetails" type="button">📋 Copy Details</button>
             <button class="btn secondary" id="confetti" type="button">✨ Confetti</button>
           </div>
@@ -464,7 +225,6 @@
         </div>
 
         <div class="games" aria-label="Games">
-          <!-- Game 1: Memory Match -->
           <div class="gameCard">
             <h3>🧠 Memory Match</h3>
             <p>Find all pairs! Tap two tiles to match.</p>
@@ -476,7 +236,6 @@
             <div class="memoryGrid" id="memoryGrid" aria-label="Memory tiles"></div>
           </div>
 
-          <!-- Game 2: Balloon Pop -->
           <div class="gameCard">
             <h3>🎈 Balloon Pop</h3>
             <p>Pop as many balloons as you can in 15 seconds!</p>
@@ -489,7 +248,6 @@
             <div class="balloonArea" id="balloonArea" aria-label="Balloon pop area"></div>
           </div>
 
-          <!-- Game 3: Quick Quiz -->
           <div class="gameCard">
             <h3>⭐ Quick Quiz</h3>
             <p>Answer 3 fun questions to earn stars!</p>
@@ -507,7 +265,6 @@
   </main>
 
   <script>
-    // ===== Invitation details =====
     const details = {
       name: "Sierra",
       dob: "22/02/2022",
@@ -517,14 +274,14 @@
       title: "Sierra’s Birthday Celebration"
     };
 
-    // ===== Button: Copy Details =====
     document.getElementById("copyDetails").addEventListener("click", async () => {
       const text =
 `${details.title}
 Name: ${details.name}
 DOB: ${details.dob}
 Celebration: ${details.date} at ${details.time}
-Place: ${details.place}`;
+Place: ${details.place}
+Map: https://maps.app.goo.gl/UNfRRZHJD8uBPXif8`;
       try{
         await navigator.clipboard.writeText(text);
         alert("Copied! ✅");
@@ -533,7 +290,6 @@ Place: ${details.place}`;
       }
     });
 
-    // ===== Button: Confetti (simple emoji burst) =====
     document.getElementById("confetti").addEventListener("click", () => {
       const emojis = ["✨","🎉","⭐","🎈","🎊","💛"];
       for(let i=0;i<50;i++){
@@ -554,16 +310,12 @@ Place: ${details.place}`;
       }
     });
 
-    // ===== Add to Calendar (.ics download) =====
     function toICSDate(dateStr, timeStr){
-      // dateStr: DD/MM/YYYY, timeStr: h:mm PM
       const [dd,mm,yyyy] = dateStr.split("/").map(Number);
       let [time, ampm] = timeStr.split(" ");
       let [hh, min] = time.split(":").map(Number);
       if(ampm.toUpperCase()==="PM" && hh !== 12) hh += 12;
       if(ampm.toUpperCase()==="AM" && hh === 12) hh = 0;
-
-      // Create local date; ICS uses "floating" local time if no Z
       const pad = (n)=> String(n).padStart(2,"0");
       return `${yyyy}${pad(mm)}${pad(dd)}T${pad(hh)}${pad(min)}00`;
     }
@@ -571,7 +323,6 @@ Place: ${details.place}`;
     document.getElementById("addToCal").addEventListener("click", (e) => {
       e.preventDefault();
       const dtStart = toICSDate(details.date, details.time);
-      // 2-hour default duration
       const [dd,mm,yyyy] = details.date.split("/").map(Number);
       const end = new Date(yyyy, mm-1, dd, 17, 30, 0);
       end.setHours(end.getHours()+2);
@@ -589,7 +340,7 @@ DTSTART:${dtStart}
 DTEND:${dtEnd}
 SUMMARY:${details.title}
 LOCATION:${details.place}
-DESCRIPTION:Classic clubhouse themed birthday celebration for ${details.name}.
+DESCRIPTION:Classic clubhouse themed birthday celebration for ${details.name}. Map: https://maps.app.goo.gl/UNfRRZHJD8uBPXif8
 END:VEVENT
 END:VCALENDAR`;
 
@@ -604,15 +355,9 @@ END:VCALENDAR`;
       URL.revokeObjectURL(url);
     });
 
-    // ===== Game 1: Memory Match =====
-    const icons = ["⭐","🎈","🧤","🍰","✨","🎁"]; // 6 pairs => 12 tiles
-    let memoryState = {
-      tiles: [],
-      first: null,
-      lock: false,
-      moves: 0,
-      pairs: 0
-    };
+    // Memory Match
+    const icons = ["⭐","🎈","🧤","🍰","✨","🎁"];
+    let memoryState = { tiles: [], first: null, lock: false, moves: 0, pairs: 0 };
 
     function shuffle(arr){
       for(let i=arr.length-1;i>0;i--){
@@ -626,10 +371,7 @@ END:VCALENDAR`;
       const grid = document.getElementById("memoryGrid");
       grid.innerHTML = "";
       const deck = shuffle([...icons, ...icons]).map((v, idx) => ({
-        id: idx,
-        v,
-        revealed:false,
-        matched:false
+        id: idx, v, revealed:false, matched:false
       }));
       memoryState = { tiles: deck, first:null, lock:false, moves:0, pairs:0 };
       document.getElementById("moves").textContent = "0";
@@ -638,9 +380,8 @@ END:VCALENDAR`;
       deck.forEach(t => {
         const btn = document.createElement("button");
         btn.className = "tile";
-        btn.setAttribute("aria-label", "Memory tile");
         btn.dataset.id = t.id;
-        btn.textContent = "•"; // hidden
+        btn.textContent = "•";
         btn.addEventListener("click", onTile);
         grid.appendChild(btn);
       });
@@ -669,7 +410,6 @@ END:VCALENDAR`;
         return;
       }
 
-      // second pick
       memoryState.moves++;
       document.getElementById("moves").textContent = String(memoryState.moves);
 
@@ -677,7 +417,6 @@ END:VCALENDAR`;
       const firstTile = memoryState.tiles[firstId];
 
       if(firstTile.v === tile.v){
-        // match
         firstTile.matched = true;
         tile.matched = true;
         memoryState.pairs++;
@@ -690,7 +429,6 @@ END:VCALENDAR`;
           setTimeout(() => alert("You matched them all! ⭐🎉"), 120);
         }
       }else{
-        // no match
         memoryState.lock = true;
         setTimeout(() => {
           firstTile.revealed = false;
@@ -706,7 +444,7 @@ END:VCALENDAR`;
     document.getElementById("resetMemory").addEventListener("click", buildMemory);
     buildMemory();
 
-    // ===== Game 2: Balloon Pop =====
+    // Balloon Pop
     const area = document.getElementById("balloonArea");
     let popTimer = null;
     let popTimeLeft = 15;
@@ -733,7 +471,6 @@ END:VCALENDAR`;
       b.style.left = x + "%";
       b.style.top = y + "%";
 
-      // vary color between red/yellow subtly
       const isYellow = Math.random() < 0.35;
       if(isYellow){
         b.style.background =
@@ -750,7 +487,6 @@ END:VCALENDAR`;
       });
 
       area.appendChild(b);
-      // auto-remove if not popped
       setTimeout(() => b.remove(), 1400);
     }
 
@@ -759,7 +495,6 @@ END:VCALENDAR`;
       resetPop();
       popRunning = true;
 
-      // spawn balloons quickly
       const spawner = setInterval(() => {
         if(!popRunning){ clearInterval(spawner); return; }
         spawnBalloon();
@@ -782,7 +517,7 @@ END:VCALENDAR`;
     document.getElementById("resetPop").addEventListener("click", resetPop);
     resetPop();
 
-    // ===== Game 3: Quick Quiz =====
+    // Quick Quiz
     const quiz = [
       { q: "What do we say when it’s party time?", a: ["Let’s gooooo!", "Time to nap", "No fun allowed"], correct: 0 },
       { q: "What’s Sierra’s celebration date?", a: ["22/02/2026", "22/02/2025", "02/22/2026"], correct: 0 },
@@ -808,7 +543,6 @@ END:VCALENDAR`;
         b.type = "button";
         b.textContent = txt;
         b.addEventListener("click", () => {
-          // disable all
           [...aEl.children].forEach(x => x.disabled = true);
           if(idx === item.correct){
             b.classList.add("good");
