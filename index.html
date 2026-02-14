@@ -536,6 +536,36 @@
       line-height: 1.5;
       margin-top: 10px;
     }
+
+    /* --- Music UI (NEW) --- */
+    .music-row{
+      display:flex;
+      gap:10px;
+      align-items:center;
+      flex-wrap:wrap;
+      margin-top: 12px;
+      padding: 10px;
+      border-radius: 16px;
+      background: rgba(0,0,0,.18);
+      border: 1px solid rgba(255,255,255,.10);
+    }
+    .slider{
+      flex: 1 1 140px;
+      display:flex;
+      align-items:center;
+      gap:10px;
+      min-width: 160px;
+    }
+    input[type="range"]{
+      width: 100%;
+      accent-color: var(--yellow);
+    }
+    .music-hint{
+      margin: 8px 0 0;
+      color: rgba(238,242,255,.75);
+      font-size: 12px;
+      line-height: 1.45;
+    }
   </style>
 </head>
 <body>
@@ -579,6 +609,23 @@
             <button class="btn primary" id="confettiBtn">Pop Confetti</button>
             <button class="btn" id="icsBtn">Add to Calendar</button>
             <a class="btn" id="mapsBtn" href="https://www.google.com/maps/search/?api=1&query=LancorLumina" target="_blank" rel="noopener">Open Maps</a>
+          </div>
+
+          <!-- ✅ MUSIC CONTROLS (NEW) -->
+          <div class="music-row" aria-label="Music controls">
+            <button class="btn small" id="musicToggle">▶️ Play Music</button>
+            <button class="btn small" id="musicRestart">⟲ Restart</button>
+
+            <div class="slider" aria-label="Volume control">
+              <span style="font-weight:900; font-size:13px;">🔊</span>
+              <input id="musicVol" type="range" min="0" max="1" step="0.01" value="0.7" />
+            </div>
+
+            <span class="pill">Now: <span id="trackLabel">Party Tune</span></span>
+          </div>
+          <div class="music-hint">
+            Note: Most mobile browsers block autoplay. Tap <b>Play Music</b> once to enable sound.
+            Replace the audio file name in the code (<b>party.mp3</b>) with your song file.
           </div>
 
           <p class="note">
@@ -709,6 +756,16 @@
   <div class="confetti" id="confetti" aria-hidden="true"></div>
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
+  <!-- ✅ AUDIO ELEMENT (NEW)
+       Put your audio file next to this HTML and name it "party.mp3"
+       or change the src below to your file name/path. -->
+  <audio id="bgMusic" preload="auto" loop playsinline>
+    <source src="party.mp3" type="audio/mpeg" />
+    <!-- Optional fallback formats:
+    <source src="party.ogg" type="audio/ogg" />
+    -->
+  </audio>
+
   <script>
     // --- Utilities ---
     const $ = (q)=>document.querySelector(q);
@@ -771,15 +828,66 @@ Place: LancorLumina`;
     }
     $("#confettiBtn").addEventListener("click", ()=>popConfetti());
 
+    // --- ✅ MUSIC (NEW) ---
+    const music = $("#bgMusic");
+    const toggleBtn = $("#musicToggle");
+    const restartBtn = $("#musicRestart");
+    const vol = $("#musicVol");
+
+    // initial volume
+    music.volume = Number(vol.value);
+
+    function updateToggleLabel(){
+      const playing = !music.paused;
+      toggleBtn.textContent = playing ? "⏸️ Pause Music" : "▶️ Play Music";
+      $("#trackLabel").textContent = playing ? "Party Tune (Playing)" : "Party Tune (Paused)";
+    }
+
+    toggleBtn.addEventListener("click", async ()=>{
+      try{
+        if(music.paused){
+          await music.play(); // requires user gesture on mobile
+          toast("Music on 🎵");
+        }else{
+          music.pause();
+          toast("Music paused");
+        }
+        updateToggleLabel();
+      }catch(e){
+        // Autoplay restriction or missing file
+        toast("Add your music file (party.mp3) first.");
+      }
+    });
+
+    restartBtn.addEventListener("click", async ()=>{
+      try{
+        music.currentTime = 0;
+        await music.play();
+        updateToggleLabel();
+        toast("Restarted 🎶");
+      }catch(e){
+        toast("Add your music file (party.mp3) first.");
+      }
+    });
+
+    vol.addEventListener("input", ()=>{
+      music.volume = Number(vol.value);
+    });
+
+    // Pause music when tab hidden (helps mobile)
+    document.addEventListener("visibilitychange", ()=>{
+      if(document.hidden && !music.paused){
+        music.pause();
+        updateToggleLabel();
+      }
+    });
+
     // --- ICS (Add to Calendar) ---
     $("#icsBtn").addEventListener("click", ()=>{
-      // Celebration: 22/02/2026 5:30 PM. We’ll generate a floating "local" event.
-      // DTSTART/DTEND in UTC to be broadly compatible; keep duration 2 hours.
-      const startLocal = new Date(2026, 1, 22, 17, 30, 0); // month is 0-based; 1 = Feb
+      const startLocal = new Date(2026, 1, 22, 17, 30, 0); // 22 Feb 2026, 5:30 PM
       const endLocal   = new Date(2026, 1, 22, 19, 30, 0);
 
       const toICS = (d)=>{
-        // Convert to UTC format YYYYMMDDTHHMMSSZ
         const pad = (n)=>String(n).padStart(2,"0");
         return (
           d.getUTCFullYear() +
@@ -864,8 +972,6 @@ END:VCALENDAR`;
       b.addEventListener("touchstart", onPop, { passive: false });
 
       popArea.appendChild(b);
-
-      // Remove when animation ends
       b.addEventListener("animationend", ()=>b.remove());
     }
 
@@ -880,7 +986,6 @@ END:VCALENDAR`;
       clearInterval(popTimer);
       popTimer = null;
       toast("Tap Pop stopped.");
-      // cleanup balloons
       popArea.querySelectorAll(".balloon").forEach(b=>b.remove());
     }
 
@@ -940,7 +1045,6 @@ END:VCALENDAR`;
           memMoves++;
           $("#memMoves").textContent = String(memMoves);
 
-          // second pick
           if(memFirst.card.sym === c.sym){
             c.matched = true;
             memFirst.card.matched = true;
@@ -1001,11 +1105,10 @@ END:VCALENDAR`;
     let spinAngle = 0;
 
     $("#spinBtn").addEventListener("click", ()=>{
-      const extra = 900 + Math.random()*900; // 2.5–5 turns
+      const extra = 900 + Math.random()*900;
       spinAngle += extra;
       wheel.style.transform = `rotate(${spinAngle}deg)`;
 
-      // Determine prize by normalized angle. Wheel has 6 equal slices.
       const normalized = ((spinAngle % 360) + 360) % 360;
       const slice = Math.floor((360 - normalized) / 60) % 6;
       const prize = prizes[slice];
@@ -1044,6 +1147,9 @@ END:VCALENDAR`;
     document.addEventListener("visibilitychange", ()=>{
       if(document.hidden) stopPop();
     });
+
+    // Sync initial music label
+    updateToggleLabel();
   </script>
 </body>
 </html>
