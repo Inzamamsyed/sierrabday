@@ -154,6 +154,28 @@
     .toast{ margin-top: 10px; font-weight: 900; color: var(--yellow); }
     .footer{ text-align:center; color: rgba(255,255,255,.68); font-weight: 700; margin-top: 6px; }
     .small{ font-size: 12px; opacity:.85; }
+
+    /* Mobile-first tweaks */
+    button, a, .tile, .ans, .balloon { touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
+    .btn { min-height: 48px; }
+    .tile { min-height: 72px; height: auto; aspect-ratio: 1 / 1; font-size: 28px; }
+    .memoryGrid { gap: 12px; }
+    .balloonArea { height: 220px; }
+    @media (max-width: 420px){
+      .wrap{ margin: 14px auto 40px; }
+      .hero{ padding: 14px; border-radius: 22px; }
+      .inviteCard, .gameCard{ padding: 14px; border-radius: 18px; }
+      .actions{ gap: 10px; }
+      .actions .btn{ flex: 1 1 100%; justify-content:center; }
+      .pillRow{ justify-content:flex-start; }
+      .pill{ width: 100%; justify-content:space-between; }
+      .ears{ transform: scale(.92); }
+      .titleBlock h1{ font-size: 30px; }
+    }
+    @media (hover: none){
+      .tile:hover, .ans:hover{ transform:none; }
+    }
+
   </style>
 </head>
 <body>
@@ -319,7 +341,8 @@ Map: https://maps.app.goo.gl/UNfRRZHJD8uBPXif8`;
       return `${yyyy}${pad(mm)}${pad(dd)}T${pad(hh)}${pad(min)}00`;
     }
 
-    document.getElementById("addToCal").addEventListener("click", (e) => {
+    const addToCalBtn = document.getElementById("addToCal");
+    if (addToCalBtn) addToCalBtn.addEventListener("click", (e) => {
       e.preventDefault();
       const dtStart = toICSDate(details.date, details.time);
       const [dd,mm,yyyy] = details.date.split("/").map(Number);
@@ -353,6 +376,7 @@ END:VCALENDAR`;
       a.remove();
       URL.revokeObjectURL(url);
     });
+    }
 
     // Memory Match
     const icons = ["⭐","🎈","🧤","🍰","✨","🎁"];
@@ -381,7 +405,7 @@ END:VCALENDAR`;
         btn.className = "tile";
         btn.dataset.id = t.id;
         btn.textContent = "•";
-        btn.addEventListener("click", onTile);
+        btn.addEventListener("pointerup", (e) => { e.preventDefault(); onTile(e); });
         grid.appendChild(btn);
       });
     }
@@ -451,6 +475,7 @@ END:VCALENDAR`;
     let popRunning = false;
 
     function resetPop(){
+      area.style.touchAction = "manipulation";
       popRunning = false;
       clearInterval(popTimer);
       popTimer = null;
@@ -477,7 +502,7 @@ END:VCALENDAR`;
           "linear-gradient(180deg, rgba(255,212,59,.95), rgba(255,212,59,.65))";
       }
 
-      b.addEventListener("click", () => {
+      b.addEventListener("pointerdown", (e) => { e.preventDefault();
         if(!popRunning) return;
         popScore++;
         document.getElementById("popScore").textContent = popScore;
@@ -490,6 +515,8 @@ END:VCALENDAR`;
     }
 
     function startPop(){
+      // Better mobile feel: avoid page scrolling while popping
+      area.style.touchAction = "none";
       if(popRunning) return;
       resetPop();
       popRunning = true;
@@ -541,7 +568,7 @@ END:VCALENDAR`;
         b.className = "ans";
         b.type = "button";
         b.textContent = txt;
-        b.addEventListener("click", () => {
+        b.addEventListener("pointerup", (e) => { e.preventDefault();
           [...aEl.children].forEach(x => x.disabled = true);
           if(idx === item.correct){
             b.classList.add("good");
